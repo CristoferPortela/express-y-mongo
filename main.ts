@@ -1,7 +1,7 @@
 /**
  * Module dependencies.
  */
-
+require('dotenv')
 import app from './app';
 import debg from 'debug'
 import http from 'http';
