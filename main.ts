@@ -2,9 +2,11 @@
  * Module dependencies.
  */
 
-var app = require('./app.ts');
-var debug = require('debug')('rr:server');
-var http = require('http');
+import app from './app';
+import debg from 'debug'
+import http from 'http';
+
+const debug = debg('rr:server')
 
 
 /**
@@ -65,6 +67,6 @@ function onListening() {
     var addr = server.address();
     var bind = typeof addr === 'string'
         ? 'pipe ' + addr
-        : 'port ' + addr.port;
+        : 'port ' + addr?.port;
     debug('Listening on ' + bind);
 }
