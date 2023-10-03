@@ -1,72 +1,78 @@
 /**
  * Module dependencies.
  */
-require('dotenv')
+const dotenv = require('dotenv')
 import app from './app';
 import debg from 'debug'
 import http from 'http';
 
 const debug = debg('rr:server')
+dotenv.config();
 
 
 /**
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+app
+    .then((app) => {
 
-/**
- * Create HTTP server.
- */
+        const port = normalizePort(process.env.PORT || '3000');
+        app.set('port', port);
 
-const server = http.createServer(app);
+        /**
+         * Create HTTP server.
+         */
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+        const server = http.createServer(app);
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+        /**
+         * Listen on provided port, on all network interfaces.
+         */
 
-/**
- * Normalize a port into a number, string, or false.
- */
+        server.listen(port);
+        server.on('error', onError);
+        server.on('listening', onListening);
 
-function normalizePort(val: string) {
-    const port = parseInt(val, 10);
+        /**
+         * Normalize a port into a number, string, or false.
+         */
 
-    if (isNaN(port)) {
-        // named pipe
-        return val;
-    }
+        function normalizePort(val: string) {
+            const port = parseInt(val, 10);
 
-    if (port >= 0) {
-        // port number
-        return port;
-    }
+            if (isNaN(port)) {
+                // named pipe
+                return val;
+            }
 
-    return false;
-}
+            if (port >= 0) {
+                // port number
+                return port;
+            }
 
-/**
- * Event listener for HTTP server "error" event.
- */
+            return false;
+        }
 
-function onError(error: Error) {
-    console.log(error)
-    process.exit(1);
-}
+        /**
+         * Event listener for HTTP server "error" event.
+         */
 
-/**
- * Event listener for HTTP server "listening" event.
- */
+        function onError(error: Error) {
+            console.log(error)
+            process.exit(1);
+        }
 
-function onListening() {
-    const addr = server.address();
-    const bind = typeof addr === 'string'
-        ? 'pipe ' + addr
-        : 'port ' + addr?.port;
-    debug('Listening on ' + bind);
-}
+        /**
+         * Event listener for HTTP server "listening" event.
+         */
+
+        function onListening() {
+            const addr = server.address();
+            const bind = typeof addr === 'string'
+                ? 'pipe ' + addr
+                : 'port ' + addr?.port;
+            debug('Listening on ' + bind);
+        }
+
+    })
