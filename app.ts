@@ -5,7 +5,6 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import {connectToDatabase} from "./services/database.services"
 
-import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 
 
@@ -31,8 +30,7 @@ async function start() {
         process.exit();
     }
 
-    app.use('/', indexRouter);
-    app.use('/users', usersRouter);
+    app.use('/', usersRouter);
 
 
     // catch 404 and forward to error handler
